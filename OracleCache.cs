@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.Caching.Oracle
         private static readonly TimeSpan MinimumExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);
         private static readonly TimeSpan DefaultExpiredItemsDeletionInterval = TimeSpan.FromMinutes(30);
 
-        private readonly IDatabaseOperations m_oracleOperations;
+        public IDatabaseOperations m_oracleOperations;
         private readonly ISystemClock _systemClock;
         private readonly TimeSpan _expiredItemsDeletionInterval;
         private DateTimeOffset _lastExpirationScan;
@@ -60,7 +60,7 @@ namespace Microsoft.Extensions.Caching.Oracle
             _deleteExpiredCachedItemsDelegate = DeleteExpiredCacheItems;
             _defaultSlidingExpiration = cacheOptions.DefaultSlidingExpiration;
 
-            m_oracleOperations = new OracleDatabaseOperations(
+            m_oracleOperations = new DatabaseOperations(
                 cacheOptions.ConnectionString,
                 cacheOptions.SchemaName,
                 _systemClock);
